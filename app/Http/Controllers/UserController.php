@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,11 +14,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $cacheData = Cache::remember('newUser', 600, function () {
-            return "Dilshan Chathuranga";
+        $users = Cache::remember('users', 60, function () {
+            return User::get();
         });
 
-        return view('home', compact('cacheData'));
+        return response()->json($users);
     }
 
     /**
@@ -32,7 +34,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'remember_token' => rand(10)
+        ]);
+
+        return response()->json($user);
     }
 
     /**
