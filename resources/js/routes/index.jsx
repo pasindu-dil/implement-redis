@@ -3,8 +3,8 @@ import PathConstants from "./PathConstants";
 import React from "react";
 import Layout from "../Layout";
 
-const Home = React.lazy(() => import("../components/dashboard/Home"));
-const Users = React.lazy(() => import("../components/users/Users"));
+const DashboardPage = React.lazy(() => import("../pages/DashboardPage"));
+const UserPage = React.lazy(() => import("../pages/UserPage"));
 
 const routes = createBrowserRouter([
     {
@@ -13,11 +13,11 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: PathConstants.HOME,
-                element: <Home />,
+                element: <DashboardPage />,
             },
             {
                 path: PathConstants.USERS,
-                element: <Users />,
+                element: <UserPage />,
             }
         ]
     }
